@@ -5,34 +5,34 @@ import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.paint.Paint;
 
-public class Food_View extends Scene{
+public class Table_Scene extends Scene {
 
-	public Food_View(Parent root) {
+	public Table_Scene(Parent root) {
 		super(root);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Food_View(Parent root, double width, double height, boolean depthBuffer, SceneAntialiasing antiAliasing) {
+	public Table_Scene(Parent root, double width, double height, boolean depthBuffer, SceneAntialiasing antiAliasing) {
 		super(root, width, height, depthBuffer, antiAliasing);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Food_View(Parent root, double width, double height, boolean depthBuffer) {
+	public Table_Scene(Parent root, double width, double height, boolean depthBuffer) {
 		super(root, width, height, depthBuffer);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Food_View(Parent root, double width, double height, Paint fill) {
+	public Table_Scene(Parent root, double width, double height, Paint fill) {
 		super(root, width, height, fill);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Food_View(Parent root, double width, double height) {
+	public Table_Scene(Parent root, double width, double height) {
 		super(root, width, height);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Food_View(Parent root, Paint fill) {
+	public Table_Scene(Parent root, Paint fill) {
 		super(root, fill);
 		// TODO Auto-generated constructor stub
 	}
