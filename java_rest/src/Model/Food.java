@@ -2,7 +2,7 @@ package Model;
 
 public class Food {
 	private String name;
-	private int type;//drink, food
+	private int type;//drink, food,extra
 	private int category;//soft drink, alcohol or chiken, port, beef... just for future
 	private int price;
 	public Food() {
