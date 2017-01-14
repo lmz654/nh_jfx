@@ -138,19 +138,18 @@ public class appclacc extends Application{
 			contextMenu.getItems().addAll(cut, copy, paste);
 			ba.setContextMenu(contextMenu);
 			//contextMenu.set
-			/*ba.setOnMouseClicked(new EventHandler<MouseEvent>(){
+			ba.setOnMouseClicked((event)->{
 
-				@Override
-				public void handle(MouseEvent event) {
+				
 					// TODO Auto-generated method stub
 					Button b = (Button)event.getSource();
 					b.getScene();
 					contextMenu.setMinWidth(b.getWidth());
 					contextMenu.setMinHeight(b.getHeight());
 					ba.getContextMenu().show(b.getParent(),event.getScreenX(), event.getScreenY());
-				}
+
 				
-			});*/
+			});
 			bb.setOnMouseClicked(new EventHandler<MouseEvent>(){
 
 				@Override
@@ -204,7 +203,6 @@ public class appclacc extends Application{
 			
 			primaryStage.setBa(ba);
 			primaryStage.setBb(bb);
-			
 			ba.getScene().getWindow();
 		} catch(Exception e) {
 			e.printStackTrace();
