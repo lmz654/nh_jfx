@@ -1,5 +1,7 @@
 package testandtry;
 	
+import java.awt.Color;
+
 import com.sun.javafx.geom.Shape;
 
 //import application.buttonfx;
@@ -13,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,7 +27,9 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 
 public class appclacc extends Application{
@@ -172,6 +177,7 @@ public class appclacc extends Application{
 			ba.setStyle("-fx-font:12 arial; -fx-background-image: url('1.jpg');-fx-background-size: "+ba.getWidth()+" "+ba.getHeight());
 			ba.widthProperty().addListener((v,o,n)->{
 				ba.setStyle("-fx-font:12 arial; -fx-background-image: url('1.jpg');-fx-background-size: "+ba.getWidth()+" "+ba.getHeight());
+				
 			});
 			ba.heightProperty().addListener((v,o,n)->{
 				ba.setStyle("-fx-font:12 arial; -fx-background-image: url('1.jpg');-fx-background-size: "+ba.getWidth()+" "+ba.getHeight());
@@ -182,6 +188,26 @@ public class appclacc extends Application{
 				i, 
 				BackgroundRepeat.ROUND, BackgroundRepeat.ROUND, 
 				BackgroundPosition.CENTER,bs);
+			Label t = new Label("thu thoi ma");
+			t.setOnMousePressed(mpress);
+			t.setOnMouseDragged(mdrag);
+			t.setOnMouseReleased(mrelease);
+			t.layoutXProperty().bind(p.widthProperty().multiply(0.3));
+			t.layoutYProperty().bind(p.heightProperty().multiply(0.3));
+			t.setStyle("-fx-font:20 arial; -fx-background-image: url('1.jpg');-fx-background-size: "+t.getWidth() +" "+t.getHeight());
+			t.widthProperty().addListener((v,o,n)->{
+				t.setStyle("-fx-font:22 arial; -fx-background-image: url('1.jpg');-fx-background-size: "+t.getWidth()+" "+t.getHeight());
+				
+			});
+			
+			t.heightProperty().addListener((v,o,n)->{
+				t.setStyle("-fx-font:22 arial; -fx-background-image: url('1.jpg');-fx-background-size: "+t.getWidth()+" "+t.getHeight());
+			});
+			t.setOpacity(0.8);
+			t.prefWidthProperty().bind(p.widthProperty().multiply(0.2));
+			t.prefHeightProperty().bind(p.heightProperty().multiply(0.2));
+			
+			p.getChildren().add(t);
 			
 			Background background = new Background(backgroundImage);
 			ba.setBackground(background);
@@ -203,7 +229,7 @@ public class appclacc extends Application{
 			
 			primaryStage.setBa(ba);
 			primaryStage.setBb(bb);
-			ba.getScene().getWindow();
+			//ba.getScene().getWindow();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
