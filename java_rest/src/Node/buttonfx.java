@@ -37,7 +37,7 @@ public class buttonfx extends Button{
 		cbgcolor=availablecolor = "#4A96AD";
 		cfont ="arial";
 		font_size = 3;
-		sratio = 0.15;
+		sratio = 0.1;
 		font_color = "#FDF3E7";
 		build_style_string();
 		

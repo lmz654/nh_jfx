@@ -1,5 +1,6 @@
 package pane;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import Node.Super_Node;
@@ -18,12 +19,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 
 public class CreateTable_Pane extends BorderPane{
 	private ObservableList<buttonfx> lcontrol;
 	private TextField tfield;
 	private Pane cpane;
 	private DoubleProperty size;
+	private buttonfx cbbind;
+	private String cpane_bgimage,cpane_bgcolor,string_style;
+	private int bgradius;
 	public CreateTable_Pane() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -41,34 +46,99 @@ public class CreateTable_Pane extends BorderPane{
 	}
 	
 	private void creatpane(){
+		String bstring="-fx-text-fill: #FDF3E7;"+
+				"-fx-font: "+ 12 + " arial"+";" +
+			    "-fx-background-color: #7E8F7C;"+
+			    "-fx-border-radius: 20;"+
+			    "-fx-background-radius: 20;"+
+			    "-fx-padding: 5;";
+		cpane_bgimage = "";
+		bgradius = 20;
+		cbbind=null;
 		size = new SimpleDoubleProperty(20.0);
 		lcontrol = FXCollections.observableArrayList(new ArrayList<buttonfx>());
+		cpane_bgcolor = "#FDF3E7";
 		cpane = new Pane();
-		cpane.setStyle("-fx-background-color: #FDF3E7; -fx-background-radius: 20;");
+		cpane.heightProperty().addListener((v,o,n)->{
+			this.build_style_string();
+			cpane.setStyle(string_style);
+		});
+		cpane.widthProperty().addListener((v,o,n)->{
+			this.build_style_string();
+			cpane.setStyle(string_style);
+		});
+		//cpane.setStyle("-fx-background-color: "+cpane_bgcolor+" ; -fx-background-radius: 20;");
 		cpane.getChildren().addAll(lcontrol);
 		//create top panel
 		HBox tpane = new HBox();
 		tpane.setStyle("-fx-background-color: #C63D0F; -fx-background-radius: 5;");
-		buttonfx nbutton = new buttonfx("New Table");
-		nbutton.setStyle("-fx-text-fill: #FDF3E7;"+
-	    "-fx-background-color: #7E8F7C;"+
-	    "-fx-border-radius: 20;"+
-	    "-fx-background-radius: 20;"+
-	    "-fx-padding: 5;");
+		Button nbutton = new Button("New Table");
+		nbutton.setStyle(bstring);
+		Button dbutton = new Button ("Delete Last Table");
+		dbutton.setStyle(bstring);
+		Button fcbutton = new Button ("BgImage chooser");
+		fcbutton.setStyle(bstring);
+		tfield = new TextField("Unknown Table");
+		tfield.setStyle("-fx-text-fill: #FDF3E7;"+
+			    "-fx-background-color: #74AFAD;"+
+			    "-fx-border-radius: 20;"+
+			    "-fx-background-radius: 10;"+
+			    "-fx-padding: 5;");
+		Button sbutton = new Button("Save");
+		sbutton.setStyle(bstring);
 		nbutton.setOnMouseClicked((value)->{
 			buttonfx b = new buttonfx(""+lcontrol.size());
+			b.setOnMouseClicked((v)->{
+				buttonfx bb = (buttonfx) v.getSource();
+				if(cbbind!=null)
+					cbbind.textProperty().unbind();
+				tfield.setText(bb.getText());
+				bb.textProperty().bind(tfield.textProperty());
+				cbbind = bb;
+				tfield.requestFocus();
+				
+			});
 			lcontrol.add(b);
 			actionsetup(b);
 			cpane.getChildren().add(b);
 			
 		});
-		tfield = new TextField("Unknown Table");
-		tfield.setStyle("-fx-text-fill: #FDF3E7;"+
-			    "-fx-background-color: #7E8F7C;"+
-			    "-fx-border-radius: 20;"+
-			    "-fx-background-radius: 20;"+
-			    "-fx-padding: 5;");
-		tpane.getChildren().addAll(nbutton, tfield);
+		dbutton.setOnMouseClicked((v)->{
+			int last = lcontrol.size()-1;
+			if(last>=0){
+				buttonfx b = lcontrol.get(last);
+				if(cbbind!=null && cbbind.equals(b)){
+					cbbind=null;
+					tfield.setText("Unknown Table");
+				}
+				b.textProperty().unbind();
+				lcontrol.remove(last);
+				cpane.getChildren().remove(b);
+			}
+		});
+		fcbutton.setOnMouseClicked((v)->{
+			ArrayList<String> lex = new ArrayList<String>();
+			lex.add("*.bmp");lex.add("*.jpg");lex.add("*.gif");lex.add("*.tif");lex.add("*.png");
+			lex.add("*.dib");lex.add("*.jpeg");lex.add("*.jpe");lex.add("*.jfif");lex.add("*.tiff");
+			FileChooser fchooser = new FileChooser();
+			fchooser.setTitle("Background Image");
+			fchooser.getExtensionFilters().addAll(
+					new FileChooser.ExtensionFilter("All Picture File",lex),
+					new FileChooser.ExtensionFilter("Monochrome","*.bmp"),
+					new FileChooser.ExtensionFilter("JPEG","*.jpg"),
+					new FileChooser.ExtensionFilter("GIF","*.gif"),
+					new FileChooser.ExtensionFilter("TIFF","*.tif"),
+					new FileChooser.ExtensionFilter("PNG","*.png")
+			);
+			File file = fchooser.showOpenDialog(fcbutton.getScene().getWindow());
+			if(file!=null){
+				this.cpane_bgimage = file.toURI().toString();
+				this.build_style_string();
+				cpane.setStyle(this.string_style);
+			}
+			
+		});
+		tpane.getChildren().addAll(nbutton, tfield,dbutton,fcbutton,sbutton);
 		this.setTop(tpane);
 		//create center panel
 		this.setCenter(cpane);
@@ -163,7 +233,13 @@ public class CreateTable_Pane extends BorderPane{
 		else{
 			bfx.prefHeightProperty().bind(cpane.heightProperty().multiply(bfx.getSratio()));
 			bfx.prefWidthProperty().bind(cpane.heightProperty().multiply(bfx.getSratio()));
-		}	
+		}		
+	}
+	private void build_style_string(){
+		this.string_style="";
+		if (this.cpane_bgimage.compareTo("")!=0)
+			this.string_style +="-fx-background-image: url('" + this.cpane_bgimage + "');-fx-background-size: " + cpane.getWidth()+" "+cpane.getHeight()+";";
+		this.string_style += "-fx-background-color: "+cpane_bgcolor+" ; -fx-background-radius: "+ this.bgradius+";";
 		
 	}
 }

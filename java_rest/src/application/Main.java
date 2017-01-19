@@ -21,7 +21,7 @@ public class Main extends Application {
 		try {
 			//BorderPane root = new BorderPane();
 			CreateTable_Pane ctpane = new CreateTable_Pane();
-			Scene scene = new Scene(ctpane,400,400);
+			Scene scene = new Scene(ctpane,600,400);
 			//scene.getStylesheets().add("application.css");
 			//primaryStage.
 			
